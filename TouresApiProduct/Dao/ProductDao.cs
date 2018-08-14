@@ -32,6 +32,7 @@ namespace TouresApiProduct.Dao
 					lst.Add(item);
 				}
 				result.Data = lst;
+				dao.Close();
 			}
 			result.Code = dao.State.Code;
 			result.Message = result.Message;
@@ -51,6 +52,7 @@ namespace TouresApiProduct.Dao
 			result.Code = dao.State.Code;
 			result.Message = dao.State.Message;
 
+			dao.Close();
 			return result;
 		}
 
@@ -69,7 +71,8 @@ namespace TouresApiProduct.Dao
 			result.Data = codeupdate;
 			result.Code = dao.State.Code;			
 			result.Message = dao.State.Message;
-			
+
+			dao.Close();
 			return result;
 		}
 
@@ -84,6 +87,7 @@ namespace TouresApiProduct.Dao
 			result.Code = dao.State.Code;
 			result.Message = dao.State.Message;
 
+			dao.Close();
 			return result;
 		}
 	}
