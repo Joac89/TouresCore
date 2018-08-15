@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TouresCommon
 {
-    public class ResponseState
+    public class ResponseStatus
     {
 		public int Code { get; set; }
 		public string Message { get; set; }

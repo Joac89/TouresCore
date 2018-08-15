@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace TouresApiProduct
+namespace TouresRestExample
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -23,7 +20,23 @@ namespace TouresApiProduct
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				 .AddJwtBearer(options =>
+				 {
+					 options.TokenValidationParameters =
+						  new TokenValidationParameters
+						  {
+							  ValidateIssuer = true,
+							  ValidateAudience = true,
+							  ValidateLifetime = true,
+							  ValidateIssuerSigningKey = true,
+
+							  ValidIssuer = Configuration["token:issuer"],
+							  ValidAudience = Configuration["token:audience"],
+							  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["token:signingkey"]))
+						  };
+				 });
+			services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +47,8 @@ namespace TouresApiProduct
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+			app.UseAuthentication();
+			app.UseMvc();
         }
     }
 }
