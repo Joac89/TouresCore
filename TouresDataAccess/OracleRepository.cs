@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using TouresCommon;
@@ -11,12 +12,14 @@ namespace TouresDataAccess
 		private OracleConnection connection;
 		private OracleDataReader reader;
 		private string connectionString = "";
+        private string outputParam = "";
 
 		public OracleParameterCollection Parameters { get; set; }
 		public ResponseStatus Status { get; set; } = new ResponseStatus();
 
-		public OracleRepository(string ConnectionString)
+		public OracleRepository(string ConnectionString, string OutputParameter)
 		{
+            outputParam = OutputParameter;
 			connectionString = ConnectionString;
 			command = new OracleCommand()
 			{
@@ -56,7 +59,10 @@ namespace TouresDataAccess
 				command.CommandText = storeProcedure;				
 				try
 				{
-					reader = command.ExecuteReader();
+					command.ExecuteNonQuery();
+
+                    reader = ((OracleRefCursor)command.Parameters[outputParam].Value).GetDataReader();
+
 					while (reader.Read())
 					{
 						var cols = reader.FieldCount;
@@ -87,8 +93,8 @@ namespace TouresDataAccess
 		{
 			try
 			{
-				connection = new OracleConnection(connectionString);
-				connection.Open();
+				connection = new OracleConnection(connectionString); 
+               connection.Open();
 				command.Connection = connection;
 
 				return true;
