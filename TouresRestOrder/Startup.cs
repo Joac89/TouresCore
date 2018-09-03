@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TouresRestCustomer
+namespace TouresRestOrder
 {
     public class Startup
     {
