@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresDataAccess", "TouresD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestExample", "TouresRestExample\TouresRestExample.csproj", "{CAFDFDCD-CACC-49AC-AF45-31D301B39181}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresRestCustomer", "TouresRestCustomer\TouresRestCustomer.csproj", "{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestCustomer", "TouresRestCustomer\TouresRestCustomer.csproj", "{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresRestOrder", "TouresRestOrder\TouresRestOrder.csproj", "{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
