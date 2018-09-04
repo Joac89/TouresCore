@@ -34,7 +34,7 @@ namespace TouresRestOrder.Service
             if (repository.Status.Code == Status.Ok)
             {
                 response.Data = true;
-                response.Message = repository.Status.Message;
+                response.Message = "Orden insertada correctamente";
             }
             else
             {
