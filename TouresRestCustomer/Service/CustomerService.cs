@@ -9,29 +9,27 @@ using TouresRestCustomer.Model;
 
 namespace TouresRestCustomer.Service
 {
-	public class AuthenticateService
+	public class CustomerService
 	{
 		private string connString = "";
-		public AuthenticateService(string ConnectionString)
+		public CustomerService(string ConnectionString)
 		{
 			connString = ConnectionString;
 		}
 
-		public async Task<ResponseBase<AuthenticateResponse>> Authenticate(AuthenticateModel data)
+		public async Task<ResponseBase<CustomerResponse>> GetCustomer(CustomerModel data)
 		{
             IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
-            var response = new ResponseBase<AuthenticateResponse>();
-            var user = new AuthenticateResponse();
+            var response = new ResponseBase<CustomerResponse>();
+            var user = new CustomerResponse();
 
-            repository.Parameters.Add("P_USERNAME", OracleDbType.Int64).Value = data.UserName;
-            repository.Parameters.Add("P_CONTRASENA", OracleDbType.Varchar2, 200).Value = data.Password;
+            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2, 200).Value = data.DocNumber;
             repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-            var result = repository.Get("PKG_B2C_CUSTOMER.B2C_CUSTOMER_SELECT_AUTENTICAR");
+            var result = repository.Get("PKG_B2C_CUSTOMER.B2C_CUSTOMER_SELECT");
             if (repository.Status.Code == Status.Ok)
             {
-                var r = result[0]["CUSTID"];
-
+                
                 foreach (var item in result)
                 {
                     user.CUSTID = long.Parse(item["CUSTID"].ToString());
@@ -43,6 +41,8 @@ namespace TouresRestCustomer.Service
                     user.CREDITCARDTYPE = item["CREDITCARDTYPE"].ToString();
                     user.CREDITCARDNUMBER = item["CREDITCARDNUMBER"].ToString();
                     user.STATUS = item["STATUS"].ToString();
+                    user.DOCNUMBER = item["DOCNUMBER"].ToString();
+                    user.USERNAME = item["USERNAME"].ToString();
                 }
                 response.Data = user;
             }
@@ -54,8 +54,6 @@ namespace TouresRestCustomer.Service
 
             return await Task.Run(() => response);
 		}
-
-        
-
+                
     }
 }
