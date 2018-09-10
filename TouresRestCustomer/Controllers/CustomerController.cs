@@ -86,5 +86,15 @@ namespace TouresApiExample.Controllers
             return Ok(result);
 
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> DeleteCustomer([FromBody] Customer data)
+        {
+            var result = new ResponseBase<Boolean>();
+            result = await new CustomerService(config["oracleConnection"]).DeleteCustomer(data);
+            return Ok(result);
+
+        }
     }
 }

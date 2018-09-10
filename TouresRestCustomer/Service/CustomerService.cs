@@ -123,5 +123,29 @@ namespace TouresRestCustomer.Service
             return await Task.Run(() => response);
         }
 
+        public async Task<ResponseBase<Boolean>> DeleteCustomer(Customer data)
+        {
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_CUSTID");
+            var response = new ResponseBase<Boolean>();
+
+            repository.Parameters.Add("P_CUSTID", OracleDbType.Varchar2, 200).Value = data.CUSTID;
+            repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
+
+            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_ELIMINAR");
+
+            if (repository.Status.Code == Status.Ok)
+            {
+                response.Data = true;
+                response.Message = "Customer Eliminado correctamente";
+            }
+            else
+            {
+                response.Data = false;
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
+        }
     }
 }
