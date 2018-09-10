@@ -29,15 +29,15 @@ namespace TouresApiExample.Controllers
 		public async Task<IActionResult> GetCustomer([FromBody] CustomerModel data)
 		{
 			var result = new ResponseBase<CustomerResponse>();
-			var userAuth = new ResponseBase<CustomerResponse>();
+			var customer = new ResponseBase<CustomerResponse>();
 
-			userAuth = await new AuthenticateService(config["oracleConnection"]).Authenticate(data);
+            customer = await new CustomerService(config["oracleConnection"]).GetCustomer(data);
 
-			if (userAuth.Code == Status.Ok && userAuth.Data.CUSTID != 0)
+			if (customer.Code == Status.Ok && customer.Data.CUSTID != 0)
 			{
 				var claims = new[]
 				{
-					new Claim(JwtRegisteredClaimNames.Sub, data.UserName),
+					new Claim(JwtRegisteredClaimNames.Sub, data.DocNumber),
 					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 				};
 
@@ -50,12 +50,10 @@ namespace TouresApiExample.Controllers
 					notBefore: DateTime.UtcNow,
 					signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["token:signingkey"])), SecurityAlgorithms.HmacSha256)
 				);
-                userAuth.Data.token = new JwtSecurityTokenHandler().WriteToken(token);
-
-
+                
                 result.Code = Status.Ok;
-                result.Data = userAuth.Data;
-                result.Message = userAuth.Message;
+                result.Data = customer.Data;
+                result.Message = customer.Message;
 
 				return Ok(result);
 			}

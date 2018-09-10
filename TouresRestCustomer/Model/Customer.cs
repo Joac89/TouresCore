@@ -2,7 +2,7 @@
 
 namespace TouresRestCustomer.Model
 {
-	public class CustomerResponse
+	public class Customer
     {        
         public long CUSTID { get; set; }
         public string FNAME { get; set; }
