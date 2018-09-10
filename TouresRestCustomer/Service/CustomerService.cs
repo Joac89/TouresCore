@@ -73,11 +73,45 @@ namespace TouresRestCustomer.Service
             repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.USERNAME;            
             repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
-            repository.SaveChanges("PKG_B2C_ORDERS.B2C_ORDERS_INSERT");
+            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_INSERT");
             if (repository.Status.Code == Status.Ok)
             {
                 response.Data = true;
-                response.Message = "Orden insertada correctamente";
+                response.Message = "Customer creado correctamente";
+            }
+            else
+            {
+                response.Data = false;
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
+        }
+
+        public async Task<ResponseBase<Boolean>> UpdateCustomer(Customer data)
+        {
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_CUSTID");
+            var response = new ResponseBase<Boolean>();
+
+            repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Value = data.CUSTID;
+            repository.Parameters.Add("P_FNAME", OracleDbType.Varchar2, 200).Value = data.FNAME;
+            repository.Parameters.Add("P_LNAME", OracleDbType.Varchar2, 200).Value = data.LNAME;
+            repository.Parameters.Add("P_PHONENUMBER", OracleDbType.Varchar2, 200).Value = data.PHONENUMBER;
+            repository.Parameters.Add("P_EMAIL", OracleDbType.Varchar2, 200).Value = data.EMAIL;
+            repository.Parameters.Add("P_PASSWORD", OracleDbType.Varchar2, 200).Value = data.PASSWORD;
+            repository.Parameters.Add("P_CREDITCARDTYPE", OracleDbType.Varchar2, 200).Value = data.CREDITCARDTYPE;
+            repository.Parameters.Add("P_CREDITCARDNUMBER", OracleDbType.Varchar2, 200).Value = data.CREDITCARDNUMBER;
+            repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2, 200).Value = data.STATUS;
+            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Int64).Value = data.DOCNUMBER;
+            repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.USERNAME;
+            repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
+
+            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_ACTUALIZAR");
+            if (repository.Status.Code == Status.Ok)
+            {
+                response.Data = true;
+                response.Message = "Customer Actualizado correctamente";
             }
             else
             {

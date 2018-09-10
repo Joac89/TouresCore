@@ -28,8 +28,8 @@ namespace TouresApiExample.Controllers
 		[HttpPost]
 		public async Task<IActionResult> GetCustomer([FromBody] CustomerModel data)
 		{
-			var result = new ResponseBase<CustomerResponse>();
-			var customer = new ResponseBase<CustomerResponse>();
+			var result = new ResponseBase<Customer>();
+			var customer = new ResponseBase<Customer>();
 
             customer = await new CustomerService(config["oracleConnection"]).GetCustomer(data);
 
@@ -60,11 +60,31 @@ namespace TouresApiExample.Controllers
 			else
 			{
 				result.Code = TouresCommon.Status.Unauthorized;
-				result.Message = userAuth.Message;
-				result.Data = userAuth.Data;
+				result.Message = customer.Message;
+				result.Data = customer.Data;
 
 				return StatusCode(result.Code, result);
 			}
 		}
-	}
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> InsertCustomer([FromBody] Customer data)
+        {
+            var result = new ResponseBase<Boolean>();
+            result = await new CustomerService(config["oracleConnection"]).InsertCustomer(data);
+            return Ok(result);
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCustomer([FromBody] Customer data)
+        {
+            var result = new ResponseBase<Boolean>();
+            result = await new CustomerService(config["oracleConnection"]).UpdateCustomer(data);
+            return Ok(result);
+
+        }
+    }
 }
