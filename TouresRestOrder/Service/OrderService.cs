@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TouresCommon;
 using TouresDataAccess;
 using TouresRestOrder.Model;
+using System.Collections.Generic;
 
 namespace TouresRestOrder.Service
 {
@@ -60,6 +61,7 @@ namespace TouresRestOrder.Service
                 throw;
             }
 
+        }
         }
         #endregion
 

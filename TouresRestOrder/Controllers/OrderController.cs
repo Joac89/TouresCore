@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TouresCommon;
 using TouresRestOrder.Model;
 using TouresRestOrder.Service;
+using System.Collections.Generic;
 
 namespace TouresRestOrder.Controllers
 {
@@ -24,38 +25,78 @@ namespace TouresRestOrder.Controllers
             config = configuration;
         }
 
+        #region Publicas
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> InsertOrder([FromBody] Order data)
         {
-            var result = new ResponseBase<Boolean>();
+            try
+            {
+                var result = new ResponseBase<Boolean>();
 
-            //data.LItems = new System.Collections.Generic.List<Item>();
-            //Item objItem = new Item();
-            //objItem.PartNum = "2" ;
-            //objItem.Price = 50000;
-            //objItem.ProdId = 1;
-            //objItem.ProductName = "MUNDIAL";
-            //objItem.Quantity = 8;
-            //data.LItems.Add(objItem);
-            string mensaje = string.Empty;
-            if (ValidaOrden(data,ref mensaje))
-            {
-                result = await new OrderService(config["oracleConnection"]).InsertOrder(data);
-                return Ok(result);
+                //data.LItems = new System.Collections.Generic.List<Item>();
+                //Item objItem = new Item();
+                //objItem.PartNum = "2" ;
+                //objItem.Price = 50000;
+                //objItem.ProdId = 1;
+                //objItem.ProductName = "MUNDIAL";
+                //objItem.Quantity = 8;
+                //data.LItems.Add(objItem);
+                string mensaje = string.Empty;
+                if (ValidaOrden(data, ref mensaje))
+                {
+                    result = await new OrderService(config["oracleConnection"]).InsertOrder(data);
+                    return Ok(result);
+                }
+                else
+                {
+                    return Ok(new ResponseBase<Boolean>()
+                    {
+                        Code = 500,
+                        Data = false,
+                        Message = mensaje
+                    });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Ok(new ResponseBase<Boolean>() {
-                    Code = 500,
-                    Data = false,
-                    Message = mensaje
-                });
+
+                throw ex;
             }
             
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult>  GetOrder()
+        {
+            try
+            {
+                var result = new ResponseBase<List<Order>>();
+
+
+                result = await new OrderService(config["oracleConnection"]).GetOrder();
+
+                if (result.Code == Status.Ok)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    result.Code = TouresCommon.Status.Unauthorized;
+                    return StatusCode(result.Code, result);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
            
         }
+        #endregion
+
 
         private Boolean ValidaOrden(Order ObjOrden, ref string Error)
         {
