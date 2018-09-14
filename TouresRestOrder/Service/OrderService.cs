@@ -62,6 +62,39 @@ namespace TouresRestOrder.Service
             }
 
         }
+
+        public async Task<ResponseBase<List<Order>>> GetOrder()
+        {
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+            var response = new ResponseBase<List<Order>>();
+            var order = new Order();
+            var lOrder = new List<Order>();
+            
+            repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+            var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT");
+            if (repository.Status.Code == Status.Ok)
+            {
+
+                foreach (var item in result)
+                {
+                    order.Comments = item["COMMENTS"].ToString();
+                    order.CustId = long.Parse(item["CUSTID"].ToString());
+                    order.OrdenDate = DateTime.Parse(item["ORDENDATE"].ToString());
+                    order.OrdId = long.Parse(item["ORDID"].ToString());
+                    order.Price = decimal.Parse(item["PRICE"].ToString());
+                    order.Status = item["STATUS"].ToString();
+                    lOrder.Add(order);
+                }
+                response.Data = lOrder;
+            }
+            else
+            {
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
         }
         #endregion
 
