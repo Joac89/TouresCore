@@ -78,6 +78,7 @@ namespace TouresRestOrder.Service
 
                 foreach (var item in result)
                 {
+                    order = new Order();
                     order.Comments = item["COMMENTS"].ToString();
                     order.CustId = long.Parse(item["CUSTID"].ToString());
                     order.OrdenDate = DateTime.Parse(item["ORDENDATE"].ToString());
@@ -87,6 +88,42 @@ namespace TouresRestOrder.Service
                     lOrder.Add(order);
                 }
                 response.Data = lOrder;
+            }
+            else
+            {
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
+        }
+
+        public async Task<ResponseBase<List<Item>>> GetItem(int IdOrder)
+        {
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+            var response = new ResponseBase<List<Item>>();
+            var ObjItem = new Item();
+            var lItem = new List<Item>();
+            repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Value = IdOrder;
+            repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+            var result = repository.Get("PKG_B2C_ORDERS.B2C_ITEMS_SELECT_ORDEN");
+            if (repository.Status.Code == Status.Ok)
+            {
+
+                foreach (var item in result)
+                {
+                    ObjItem = new Item();
+                    ObjItem.ItemId = long.Parse(item["COMMENTS"].ToString());
+                    ObjItem.OrdId = long.Parse(item["OrdId"].ToString());
+                    ObjItem.PartNum = item["PartNum"].ToString();
+                    ObjItem.Price = decimal.Parse(item["Price"].ToString());
+                    ObjItem.ProdId = long.Parse(item["ProdId"].ToString());
+                    ObjItem.ProductName = item["ProductName"].ToString();
+                    ObjItem.Quantity = int.Parse(item["ProductName"].ToString());
+                    lItem.Add(ObjItem);
+                }
+                response.Data = lItem;
             }
             else
             {

@@ -95,6 +95,35 @@ namespace TouresRestOrder.Controllers
             }
            
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetItem([FromBody] int IdOrder)
+        {
+            try
+            {
+                var result = new ResponseBase<List<Item>>();
+
+
+                result = await new OrderService(config["oracleConnection"]).GetItem(IdOrder);
+
+                if (result.Code == Status.Ok)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    result.Code = TouresCommon.Status.Unauthorized;
+                    return StatusCode(result.Code, result);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
         #endregion
 
 
