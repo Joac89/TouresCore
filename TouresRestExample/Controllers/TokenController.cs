@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TouresCommon;
+using TouresCommon.Model;
 using TouresRestExample.Model;
 using TouresRestExample.Service;
 
@@ -33,7 +34,7 @@ namespace TouresApiExample.Controllers
 
 			userAuth = await new AuthenticateService(config["sqlConnection"]).Authenticate(data);
 
-			if (userAuth.Code == Status.Ok && userAuth.Data.Id != 0)
+			if (userAuth.Code == Status.Ok && userAuth.Data.CUSTID != 0)
 			{
 				var claims = new[]
 				{

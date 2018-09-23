@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Text;
 using TouresCommon;
 
-namespace TouresDataAccess
+namespace TouresRepository
 {
 	public class SqlServerRepository : IRepository<SqlParameterCollection>
 	{

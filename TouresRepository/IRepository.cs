@@ -2,7 +2,7 @@
 using System.Data.Common;
 using TouresCommon;
 
-namespace TouresDataAccess
+namespace TouresRepository
 {
 	public interface IRepository<T>
     {

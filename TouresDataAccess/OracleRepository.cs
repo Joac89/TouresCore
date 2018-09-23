@@ -15,7 +15,7 @@ namespace TouresDataAccess
         private string outputParam = "";
 
 		public OracleParameterCollection Parameters { get; set; }
-		public ResponseStatus Status { get; set; } = new ResponseStatus();
+		public StatusResponse Status { get; set; } = new StatusResponse();
 
 		public OracleRepository(string ConnectionString, string OutputParameter)
 		{

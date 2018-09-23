@@ -2,11 +2,21 @@
 
 namespace TouresCommon
 {
-	public class ResponseController: ControllerBase
+	class ResponseController: ControllerBase
     {
-		public ObjectResult Message<T>(int code, T result)
+		public ObjectResult HttpStatus<T>(int code, T result)
 		{
-			return code == TouresCommon.Status.Ok ? base.Ok(result) : base.StatusCode(code, result);
+			return code == Status.Ok ? base.Ok(result) : base.StatusCode(code, result);
+		}		
+	}
+
+	public static class ExtensionController
+	{
+		public static ObjectResult Result<T>(this ControllerBase controller, int code, T result)
+		{
+			var ctrl = new ResponseController();
+
+			return ctrl.HttpStatus(code, result);
 		}
 	}
 }

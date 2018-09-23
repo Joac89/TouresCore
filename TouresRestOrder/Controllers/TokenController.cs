@@ -6,7 +6,7 @@ using TouresAuthenticate.Model;
 using TouresAuthenticate.Service;
 using TouresCommon;
 
-namespace TouresRestCustomer.Controllers
+namespace TouresRestOrder.Controllers
 {
 	[Produces("application/json")]
 	[Route("api/v1/Token")]
@@ -48,7 +48,7 @@ namespace TouresRestCustomer.Controllers
 			}
 			else
 			{
-				result.Code = Status.Unauthorized;
+				result.Code = TouresCommon.Status.Unauthorized;
 				result.Message = userAuth.Message;
 				result.Data = userAuth.Data;
 

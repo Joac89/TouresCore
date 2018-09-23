@@ -1,26 +1,27 @@
-﻿using System;
+﻿using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Text;
 using TouresCommon;
 
-namespace TouresDataAccess
+namespace TouresRepository
 {
-	public class SqlServerRepository : IRepository<SqlParameterCollection>
-	{
-		private SqlCommand command;
-		private SqlConnection connection;
-		private SqlDataReader reader;
+	public class OracleRepository: IRepository<OracleParameterCollection>
+    {
+		private OracleCommand command;
+		private OracleConnection connection;
+		private OracleDataReader reader;
 		private string connectionString = "";
+        private string outputParam = "";
 
-		public SqlParameterCollection Parameters { get; set; }
+		public OracleParameterCollection Parameters { get; set; }
 		public StatusResponse Status { get; set; } = new StatusResponse();
 
-		public SqlServerRepository(string ConnectionString)
+		public OracleRepository(string ConnectionString, string OutputParameter)
 		{
+            outputParam = OutputParameter;
 			connectionString = ConnectionString;
-			command = new SqlCommand()
+			command = new OracleCommand()
 			{
 				CommandType = System.Data.CommandType.StoredProcedure
 			};
@@ -33,7 +34,7 @@ namespace TouresDataAccess
 
 			if (open)
 			{
-				command.CommandText = storeProcedure;			
+				command.CommandText = storeProcedure;		
 				try
 				{
 					command.ExecuteNonQuery();
@@ -55,10 +56,13 @@ namespace TouresDataAccess
 
 			if (open)
 			{
-				command.CommandText = storeProcedure;
+				command.CommandText = storeProcedure;				
 				try
 				{
-					reader = command.ExecuteReader();
+					command.ExecuteNonQuery();
+
+                    reader = ((OracleRefCursor)command.Parameters[outputParam].Value).GetDataReader();
+
 					while (reader.Read())
 					{
 						var cols = reader.FieldCount;
@@ -89,8 +93,8 @@ namespace TouresDataAccess
 		{
 			try
 			{
-				connection = new SqlConnection(connectionString);
-				connection.Open();
+				connection = new OracleConnection(connectionString); 
+               connection.Open();
 				command.Connection = connection;
 
 				return true;

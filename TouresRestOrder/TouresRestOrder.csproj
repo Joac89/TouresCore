@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TouresAuthenticate\TouresAuthenticate.csproj" />
     <ProjectReference Include="..\TouresCommon\TouresCommon.csproj" />
-    <ProjectReference Include="..\TouresDataAccess\TouresDataAccess.csproj" />
+    <ProjectReference Include="..\TouresRepository\TouresRepository.csproj" />
   </ItemGroup>
 
 </Project>

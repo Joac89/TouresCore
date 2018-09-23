@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresCommon", "TouresCommon\TouresCommon.csproj", "{16E8DA2F-CFE3-4EE9-9099-E1CBB00C1739}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresDataAccess", "TouresDataAccess\TouresDataAccess.csproj", "{CF0D942A-6214-4F7E-9E1A-595DE4F457FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestExample", "TouresRestExample\TouresRestExample.csproj", "{CAFDFDCD-CACC-49AC-AF45-31D301B39181}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestCustomer", "TouresRestCustomer\TouresRestCustomer.csproj", "{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresRestOrder", "TouresRestOrder\TouresRestOrder.csproj", "{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestOrder", "TouresRestOrder\TouresRestOrder.csproj", "{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresAuthenticate", "TouresAuthenticate\TouresAuthenticate.csproj", "{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresRepository", "TouresRepository\TouresRepository.csproj", "{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,6 @@ Global
 		{16E8DA2F-CFE3-4EE9-9099-E1CBB00C1739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16E8DA2F-CFE3-4EE9-9099-E1CBB00C1739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16E8DA2F-CFE3-4EE9-9099-E1CBB00C1739}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF0D942A-6214-4F7E-9E1A-595DE4F457FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF0D942A-6214-4F7E-9E1A-595DE4F457FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF0D942A-6214-4F7E-9E1A-595DE4F457FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF0D942A-6214-4F7E-9E1A-595DE4F457FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAFDFDCD-CACC-49AC-AF45-31D301B39181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAFDFDCD-CACC-49AC-AF45-31D301B39181}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAFDFDCD-CACC-49AC-AF45-31D301B39181}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAFDFDCD-CACC-49AC-AF45-31D301B39181}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EDF83F-0B1A-4E24-B931-9EC7437BC93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +31,14 @@ Global
 		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

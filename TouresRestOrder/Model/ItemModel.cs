@@ -1,9 +1,8 @@
 ﻿using System;
 
-
 namespace TouresRestOrder.Model
 {
-    public class Item
+    public class ItemModel
     {
         public long ItemId {get;set;}
         public long OrdId { get; set; }

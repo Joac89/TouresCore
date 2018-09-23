@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TouresRestOrder.Model
 {
-    public class Order
+    public class OrderModel
     {
         public long OrdId { get; set; }
         public long CustId { get; set; }
@@ -11,6 +11,6 @@ namespace TouresRestOrder.Model
         public decimal Price { get; set; }
         public string Status { get; set; }
         public string Comments { get; set; }
-        public List<Item> LItems { get; set; }
+        public List<ItemModel> LItems { get; set; }
     }
 }
