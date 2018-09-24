@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
@@ -7,9 +8,10 @@ using TouresAuthenticate.Service;
 using TouresCommon;
 
 namespace TouresRestOrder.Controllers
-{
+{	
 	[Produces("application/json")]
 	[Route("api/v1/Token")]
+	[EnableCors("*")]
 	public class TokenController : Controller
 	{
 		private IConfiguration config;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace TouresRestCustomer.Controllers
 {
 	[Produces("application/json")]
 	[Route("api/v1/Customer")]
+	[EnableCors("*")]
 	public class CustomerController : Controller
 	{
 		private IConfiguration config;

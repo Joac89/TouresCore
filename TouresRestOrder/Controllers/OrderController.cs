@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -12,6 +13,7 @@ namespace TouresRestOrder.Controllers
 {
 	[Produces("application/json")]
 	[Route("api/v1/Order")]
+	[EnableCors("*")]
 	public class OrderController : Controller
 	{
 		private IConfiguration config;
@@ -38,7 +40,7 @@ namespace TouresRestOrder.Controllers
 			}
 			else
 			{
-				result.Code = Status.InvalidData;
+				result.Code = Status.UnprocessableEntity;
 				result.Message = mensaje;
 			}
 		
