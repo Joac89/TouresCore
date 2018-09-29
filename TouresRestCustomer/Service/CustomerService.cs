@@ -60,7 +60,8 @@ namespace TouresRestCustomer.Service
             IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_CUSTID");
             var response = new ResponseBase<Boolean>();
 
-            repository.Parameters.Add("P_FNAME", OracleDbType.Varchar2, 200).Value = data.FName;
+			repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Direction = ParameterDirection.Output;
+			repository.Parameters.Add("P_FNAME", OracleDbType.Varchar2, 200).Value = data.FName;
             repository.Parameters.Add("P_LNAME", OracleDbType.Varchar2, 200).Value = data.LName;
             repository.Parameters.Add("P_PHONENUMBER", OracleDbType.Varchar2, 200).Value = data.PhoneNumber;
             repository.Parameters.Add("P_EMAIL", OracleDbType.Varchar2, 200).Value = data.Email;
@@ -68,11 +69,10 @@ namespace TouresRestCustomer.Service
             repository.Parameters.Add("P_CREDITCARDTYPE", OracleDbType.Varchar2, 200).Value = data.CreditCardType;
             repository.Parameters.Add("P_CREDITCARDNUMBER", OracleDbType.Varchar2, 200).Value = data.CreditCardNumber;
             repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2, 200).Value = data.Status;            
-            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Int64).Value = data.DocNumber;
+            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2).Value = data.DocNumber;
             repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.UserName;            
-            repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Direction = ParameterDirection.Output;
-
-            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_INSERT");
+			
+            repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_INSERT");
             if (repository.Status.Code == Status.Ok)
             {
                 response.Data = true;
@@ -102,11 +102,11 @@ namespace TouresRestCustomer.Service
             repository.Parameters.Add("P_CREDITCARDTYPE", OracleDbType.Varchar2, 200).Value = data.CreditCardType;
             repository.Parameters.Add("P_CREDITCARDNUMBER", OracleDbType.Varchar2, 200).Value = data.CreditCardNumber;
             repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2, 200).Value = data.Status;
-            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Int64).Value = data.DocNumber;
+            repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2).Value = data.DocNumber;
             repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.UserName;
             repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
-            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_ACTUALIZAR");
+            repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_ACTUALIZAR");
             if (repository.Status.Code == Status.Ok)
             {
                 response.Data = true;
@@ -130,7 +130,7 @@ namespace TouresRestCustomer.Service
             repository.Parameters.Add("P_CUSTID", OracleDbType.Varchar2, 200).Value = id;
             repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
-            repository.SaveChanges("PKG_B2C_ORDERS.B2C_CUSTOMER_ELIMINAR");
+            repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_ELIMINAR");
             if (repository.Status.Code == Status.Ok)
             {
                 response.Data = true;
