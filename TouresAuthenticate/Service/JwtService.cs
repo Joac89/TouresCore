@@ -23,6 +23,7 @@ namespace TouresAuthenticate.Service
 				audience: jwtParams.Audience,
 				claims: claims,
 				expires: DateTime.UtcNow.AddHours(double.Parse(jwtParams.Expire)),
+				//expires: DateTime.UtcNow.AddMinutes(double.Parse("2")),
 				notBefore: DateTime.UtcNow,
 				signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtParams.SigningKey)), SecurityAlgorithms.HmacSha256)
 			);
