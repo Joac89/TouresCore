@@ -79,7 +79,7 @@ namespace TouresRestOrder.Controllers
 
         [Authorize]
         [HttpPost("cancel/{idOrder}")]
-        public async Task<IActionResult> CancelOrder(int idOrder, int idEstado)
+        public async Task<IActionResult> CancelOrder(int idOrder)
         {
             var result = new ResponseBase<bool>();
             var mensaje = string.Empty;
