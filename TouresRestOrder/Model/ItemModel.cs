@@ -11,5 +11,7 @@ namespace TouresRestOrder.Model
         public string PartNum { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+        public Estado IdEstado { get; set; }
+        public string Status { get; set; }
     }
 }

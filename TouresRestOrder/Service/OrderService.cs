@@ -22,11 +22,10 @@ namespace TouresRestOrder.Service
 		{
 			IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ORDID");
 			var response = new ResponseBase<bool>();
-
-			repository.Parameters.Add("P_CustId", OracleDbType.Int64).Value = data.CustId;
+            repository.Parameters.Add("P_CustId", OracleDbType.Int64).Value = data.CustId;
 			repository.Parameters.Add("P_OrdenDate", OracleDbType.Date, 200).Value = DateTime.Now;
 			repository.Parameters.Add("P_Price", OracleDbType.Long, 200).Value = data.Price;
-			repository.Parameters.Add("P_Status", OracleDbType.Varchar2).Value = data.Status;
+			repository.Parameters.Add("P_IdEstado", OracleDbType.Int16).Value = 1;
 			repository.Parameters.Add("P_Comments", OracleDbType.Varchar2).Value = data.Comments;
 			repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
@@ -37,7 +36,8 @@ namespace TouresRestOrder.Service
 				foreach (var item in data.LItems)
 				{
 					item.OrdId = OrdId;
-					if (!InsertItem(item).Data)
+                    item.IdEstado = 1;
+                    if (!InsertItem(item).Data)
 					{
 
 					}
@@ -124,10 +124,35 @@ namespace TouresRestOrder.Service
 
 			return await Task.Run(() => response);
 		}
-		#endregion
 
-		#region Privadas
-		private ResponseBase<Boolean> InsertItem(ItemModel ObjItem)
+        public async Task<ResponseBase<bool>> ActualizaEstadoOrder(int IdOrden, int IdEstado)
+        {
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ROWCOUNT");
+            var response = new ResponseBase<bool>();
+            repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Value = IdOrden;
+            repository.Parameters.Add("P_IdEstado", OracleDbType.Int16).Value = IdEstado;
+            repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
+
+            repository.SaveChanges("PKG_B2C_ORDERS.B2C_ORDERS_ACTUALIZA");
+            if (repository.Status.Code == Status.Ok)
+            {
+                response.Data = true;
+                response.Message = "Orden actualizada correctamente";
+            }
+            else
+            {
+                response.Data = false;
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
+        }
+
+        #endregion
+
+        #region Privadas
+        private ResponseBase<Boolean> InsertItem(ItemModel ObjItem)
 		{
 			var response = new ResponseBase<bool>();
 
@@ -139,7 +164,8 @@ namespace TouresRestOrder.Service
 			repository.Parameters.Add("P_PARTNUM", OracleDbType.Varchar2).Value = ObjItem.PartNum;
 			repository.Parameters.Add("P_PRICE", OracleDbType.Long).Value = ObjItem.Price;
 			repository.Parameters.Add("P_QUANTITY", OracleDbType.Int16).Value = ObjItem.Quantity;
-			repository.Parameters.Add("P_ITEMID", OracleDbType.Int64).Direction = ParameterDirection.Output;
+            repository.Parameters.Add("P_IdEstado", OracleDbType.Int16).Value = ObjItem.IdEstado;
+            repository.Parameters.Add("P_ITEMID", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
 			repository.SaveChanges("PKG_B2C_ORDERS.B2C_ITEMS_INSERT");
 			if (repository.Status.Code == Status.Ok)
@@ -156,6 +182,6 @@ namespace TouresRestOrder.Service
 
 			return response;
 		}
-		#endregion
-	}
+        #endregion
+    }
 }
