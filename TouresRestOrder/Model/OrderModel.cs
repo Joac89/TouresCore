@@ -29,5 +29,10 @@ namespace TouresRestOrder.Model
 
 		[Required(AllowEmptyStrings = false)]
 		public List<ItemModel> LItems { get; set; }
+
+		/// <summary>
+		/// Pendiente = 1,Aprobado = 2,Rechazado = 3,Cancelado = 4
+		/// </summary>
+		public int IdEstado { get; set; }
 	}
 }

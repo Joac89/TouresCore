@@ -30,5 +30,7 @@ namespace TouresRestOrder.Model
 		[Required(AllowEmptyStrings = false)]
 		[Range(1, 999999999)]
 		public int Quantity { get; set; }
+
+		public int IdEstado { get; set; }
 	}
 }

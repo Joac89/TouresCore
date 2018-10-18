@@ -28,32 +28,12 @@ namespace TouresRestOrder.Controllers
 		#region Publicas
 
 		[Authorize]
-		[HttpPost]
+		[HttpPost("insert")]
 		public async Task<IActionResult> InsertOrder([FromBody] OrderModel data)
 		{
 			var result = new ResponseBase<bool>();
-			var mensaje = string.Empty;
 
-			if (ValidaOrden(data, ref mensaje))
-			{
-				result = await new OrderService(oracleConn).InsertOrder(data);
-			}
-			else
-			{
-				result.Code = Status.UnprocessableEntity;
-				result.Message = mensaje;
-			}
-
-			//if (ValidaOrden(data, ref mensaje))
-			//{
-			//	result = await new OrderService(oracleConn).InsertOrder(data);
-			//}
-			//else
-			//{
-			//	result.Code = Status.UnprocessableEntity;
-			//	result.Message = mensaje;
-			//}
-
+			result = await new OrderService(oracleConn).InsertOrder(data);
 			return this.Result(result.Code, result);
 		}
 
@@ -80,58 +60,43 @@ namespace TouresRestOrder.Controllers
 
 		[Authorize]
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteOrder(long id)
+		public async Task<IActionResult> DeleteOrder(int id, int estado)
 		{
 			var result = new ResponseBase<bool>();
 			var mensaje = string.Empty;
 
-			result = await new OrderService(oracleConn).DeleteOrder(id);
+			result = await new OrderService(oracleConn).ActualizaEstadoOrder(id, estado);
 			return this.Result(result.Code, result);
 		}
 
-
-		private Boolean ValidaOrden(OrderModel ObjOrden, ref string Error)
+		[Authorize]
+		[HttpGet("{idOrder}")]
+		public async Task<IActionResult> GetItem(int idOrder)
 		{
-			Boolean retorno = true;
-			if (ObjOrden.CustId == 0)
-			{
-				Error = "El cliente ingresado no es valido.";
-				retorno = false;
-			}
-			if (ObjOrden.Price == 0)
-			{
-				Error += " El precio ingresado no es valido.";
-				retorno = false;
-			}
-			if (ObjOrden.LItems == null || ObjOrden.LItems.Count == 0)
-			{
-				Error += " La orden debe tener al menos un producto asociado.";
-				retorno = false;
-			}
-			foreach (var item in ObjOrden.LItems)
-			{
-				if (item.ProductName == string.Empty)
-				{
-					Error += " El producto no es valido.";
-					retorno = false;
-				}
-				if (item.ProdId == 0)
-				{
-					Error += " El codigo del producto " + item.ProductName + " no es valido.";
-					retorno = false;
-				}
-				if (item.Price == 0)
-				{
-					Error += " El precio del producto " + item.ProductName + " no es valido.";
-					retorno = false;
-				}
-				if (item.Quantity == 0)
-				{
-					Error += " La cantidad del producto " + item.ProductName + " no es valida.";
-					retorno = false;
-				}
-			}
-			return retorno;
+			var result = new ResponseBase<List<ItemModel>>();
+
+			result = await new OrderService(oracleConn).GetItemFromOrder(idOrder);
+			return this.Result(result.Code, result);
+		}
+
+		[Authorize]
+		[HttpPost("update/{idOrder}/{idEstado}")]
+		public async Task<IActionResult> UpdateEstadoOrder(int idOrder, int idEstado)
+		{
+			var result = new ResponseBase<bool>();
+			var mensaje = string.Empty;
+			result = await new OrderService(oracleConn).ActualizaEstadoOrder(idOrder, idEstado);
+			return this.Result(result.Code, result);
+		}
+
+		[Authorize]
+		[HttpPost("cancel/{idOrder}")]
+		public async Task<IActionResult> CancelOrder(int idOrder)
+		{
+			var result = new ResponseBase<bool>();
+			var mensaje = string.Empty;
+			result = await new OrderService(oracleConn).ActualizaEstadoOrder(idOrder, 4);
+			return this.Result(result.Code, result);
 		}
 	}
 }
