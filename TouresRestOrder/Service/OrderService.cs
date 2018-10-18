@@ -156,36 +156,44 @@ namespace TouresRestOrder.Service
 				response.Message = "The field IdOrder is zero(0)";
 			}
 
+			return await Task.Run(() => response);
+		}
 
+		public async Task<ResponseBase<bool>> ActualizaEstadoOrder(int IdOrden, int IdEstado)
+		{
+			var response = new ResponseBase<bool>();
+
+			if (IdOrden > 0 && IdEstado > 0)
+			{
+				IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ROWCOUNT");
+
+				repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Value = IdOrden;
+				repository.Parameters.Add("P_IDESTADO", OracleDbType.Int16).Value = IdEstado;
+				repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
+
+				repository.SaveChanges("PKG_B2C_ORDERS.B2C_ORDERS_ACTUALIZA");
+				if (repository.Status.Code == Status.Ok)
+				{
+					response.Data = true;
+					response.Message = "Orden actualizada correctamente";
+				}
+				else
+				{
+					response.Data = false;
+					response.Message = repository.Status.Message;
+				}
+				response.Code = repository.Status.Code;
+			}
+			else
+			{
+				response.Code = Status.InvalidData;
+				response.Message = "The field IdOrder or IdEstado is zero(0)";
+			}
 
 			return await Task.Run(() => response);
 		}
 
-        public async Task<ResponseBase<bool>> ActualizaEstadoOrder(int IdOrden, int IdEstado)
-        {
-            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ROWCOUNT");
-            var response = new ResponseBase<bool>();
-            repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Value = IdOrden;
-            repository.Parameters.Add("P_IDESTADO", OracleDbType.Int16).Value = IdEstado;
-            repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
-
-            repository.SaveChanges("PKG_B2C_ORDERS.B2C_ORDERS_ACTUALIZA");
-            if (repository.Status.Code == Status.Ok)
-            {
-                response.Data = true;
-                response.Message = "Orden actualizada correctamente";
-            }
-            else
-            {
-                response.Data = false;
-                response.Message = repository.Status.Message;
-            }
-            response.Code = repository.Status.Code;
-
-            return await Task.Run(() => response);
-        }
-
-        #endregion
+		#endregion
 
 		#region Privadas
 		private ResponseBase<Boolean> InsertItem(ItemModel ObjItem)
@@ -227,6 +235,6 @@ namespace TouresRestOrder.Service
 
 			return response;
 		}
-        #endregion
-    }
+		#endregion
+	}
 }
