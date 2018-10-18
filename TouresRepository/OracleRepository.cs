@@ -45,6 +45,9 @@ namespace TouresRepository
 				catch (Exception ex)
 				{
 					Status.Code = TouresCommon.Status.InternalError;
+
+					Console.WriteLine(ex.ToString());
+
 					Status.Message = $"Error al transportar datos a la base de datos: {ex.Message}";
 				}
 			}

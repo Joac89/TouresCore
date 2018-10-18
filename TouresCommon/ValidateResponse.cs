@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TouresCommon
 {
-    public class ResponseStatus
-    {
-		public int Code { get; set; }
+	public class ValidateResponse
+	{
+		public bool Status { get; set; }
 		public string Message { get; set; }
-    }
+	}
 }

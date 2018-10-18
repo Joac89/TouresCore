@@ -43,31 +43,53 @@ namespace TouresRestOrder.Controllers
 				result.Code = Status.UnprocessableEntity;
 				result.Message = mensaje;
 			}
-		
+
+			//if (ValidaOrden(data, ref mensaje))
+			//{
+			//	result = await new OrderService(oracleConn).InsertOrder(data);
+			//}
+			//else
+			//{
+			//	result.Code = Status.UnprocessableEntity;
+			//	result.Message = mensaje;
+			//}
+
 			return this.Result(result.Code, result);
 		}
 
 		[Authorize]
-		[HttpGet]
-		public async Task<IActionResult> GetOrder()
+		[HttpGet("{customer}")]
+		public async Task<IActionResult> GetOrders(long customer)
 		{
 			var result = new ResponseBase<List<OrderModel>>();
 
-			result = await new OrderService(oracleConn).GetOrder();
+			result = await new OrderService(oracleConn).GetOrders(customer);
 			return this.Result(result.Code, result);
 		}
 
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> GetItem([FromBody] int IdOrder)
+		public async Task<IActionResult> GetItemFromOrder([FromBody] int IdOrder)
 		{
 			var result = new ResponseBase<List<ItemModel>>();
 
-			result = await new OrderService(oracleConn).GetItem(IdOrder);
-			return this.Result(result.Code, result);			
+			result = await new OrderService(oracleConn).GetItemFromOrder(IdOrder);
+			return this.Result(result.Code, result);
 		}
 		#endregion
-		
+
+		[Authorize]
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteOrder(long id)
+		{
+			var result = new ResponseBase<bool>();
+			var mensaje = string.Empty;
+
+			result = await new OrderService(oracleConn).DeleteOrder(id);
+			return this.Result(result.Code, result);
+		}
+
+
 		private Boolean ValidaOrden(OrderModel ObjOrden, ref string Error)
 		{
 			Boolean retorno = true;

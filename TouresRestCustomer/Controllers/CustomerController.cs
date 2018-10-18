@@ -22,7 +22,7 @@ namespace TouresRestCustomer.Controllers
 			config = configuration;
 			oracleConn = config["oracleConnection"];
 		}
-		
+
 		[Authorize]
 		[HttpGet("{document}")]
 		public async Task<IActionResult> GetCustomer(string document)
@@ -52,7 +52,7 @@ namespace TouresRestCustomer.Controllers
 			var result = new ResponseBase<CustomerModel>();
 			result = await new CustomerService(oracleConn).LoginCustomer(data);
 
-			if (result.Data.CustId == -1) result.Code = Status.NotFound;
+			if (result.Data != null && result.Data.CustId == -1) result.Code = Status.NotFound;
 
 			return this.Result(result.Code, result);
 		}

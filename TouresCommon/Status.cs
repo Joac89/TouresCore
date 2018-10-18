@@ -12,6 +12,7 @@ namespace TouresCommon
 		public const int ConnectionDbError = 503;
 		public const int UnprocessableEntity = 422;
 		public const int InvalidToken = 400;
+		public const int InvalidData = 422;
 		public const int NotFound = 404;
 		public const int Forbiden = 403;
 		public const int Unauthorized = 407;

@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestCustomer", "Toure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRestOrder", "TouresRestOrder\TouresRestOrder.csproj", "{8EDE8103-8F42-4D2B-BFF8-2CF21C4060BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresAuthenticate", "TouresAuthenticate\TouresAuthenticate.csproj", "{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresAuthenticate", "TouresAuthenticate\TouresAuthenticate.csproj", "{BBD13440-2109-4480-8F1B-2A9D1DD4C19E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouresRepository", "TouresRepository\TouresRepository.csproj", "{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouresRepository", "TouresRepository\TouresRepository.csproj", "{3664D714-DE84-4AD1-A5A3-5DD9F17DCE7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
