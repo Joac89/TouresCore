@@ -6,20 +6,21 @@ using TouresCommon;
 
 namespace TouresRepository
 {
-	public class OracleRepository: IRepository<OracleParameterCollection>
-    {
+	public class OracleRepository : IRepository<OracleParameterCollection>
+	{
 		private OracleCommand command;
 		private OracleConnection connection;
 		private OracleDataReader reader;
 		private string connectionString = "";
-        private string outputParam = "";
+		private string outputParam = "";
 
 		public OracleParameterCollection Parameters { get; set; }
 		public StatusResponse Status { get; set; } = new StatusResponse();
 
+		public OracleRepository() { }
 		public OracleRepository(string ConnectionString, string OutputParameter)
 		{
-            outputParam = OutputParameter;
+			outputParam = OutputParameter;
 			connectionString = ConnectionString;
 			command = new OracleCommand()
 			{
@@ -34,7 +35,7 @@ namespace TouresRepository
 
 			if (open)
 			{
-				command.CommandText = storeProcedure;		
+				command.CommandText = storeProcedure;
 				try
 				{
 					command.ExecuteNonQuery();
@@ -59,12 +60,12 @@ namespace TouresRepository
 
 			if (open)
 			{
-				command.CommandText = storeProcedure;				
+				command.CommandText = storeProcedure;
 				try
 				{
 					command.ExecuteNonQuery();
 
-                    reader = ((OracleRefCursor)command.Parameters[outputParam].Value).GetDataReader();
+					reader = ((OracleRefCursor)command.Parameters[outputParam].Value).GetDataReader();
 
 					while (reader.Read())
 					{
@@ -96,8 +97,8 @@ namespace TouresRepository
 		{
 			try
 			{
-				connection = new OracleConnection(connectionString); 
-               connection.Open();
+				connection = new OracleConnection(connectionString);
+				connection.Open();
 				command.Connection = connection;
 
 				return true;

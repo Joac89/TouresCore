@@ -15,7 +15,7 @@ namespace TouresCommon
 		public const int InvalidData = 422;
 		public const int NotFound = 404;
 		public const int Forbiden = 403;
-		public const int Unauthorized = 407;
+		public const int Unauthorized = 401;
 		public const string InvalidTokenMessage = "Token no válido";
     }
 }

@@ -12,6 +12,7 @@ namespace TouresRestCustomer.Service
 	public class CustomerService
 	{
 		private string connString = "";
+
 		public CustomerService(string ConnectionString)
 		{
 			connString = ConnectionString;

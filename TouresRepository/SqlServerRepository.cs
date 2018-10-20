@@ -15,6 +15,7 @@ namespace TouresRepository
 		public SqlParameterCollection Parameters { get; set; }
 		public StatusResponse Status { get; set; } = new StatusResponse();
 
+		public SqlServerRepository() { }
 		public SqlServerRepository(string ConnectionString)
 		{
 			connectionString = ConnectionString;
@@ -31,7 +32,7 @@ namespace TouresRepository
 
 			if (open)
 			{
-				command.CommandText = storeProcedure;			
+				command.CommandText = storeProcedure;
 				try
 				{
 					command.ExecuteNonQuery();
