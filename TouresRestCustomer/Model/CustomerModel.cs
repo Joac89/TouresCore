@@ -35,7 +35,7 @@ namespace TouresRestCustomer.Model
 		public string CreditCardNumber { get; set; }
 		
 		[Required(AllowEmptyStrings = false)]
-		[StringLength(20, MinimumLength = 10)]
+		[StringLength(20, MinimumLength = 5)]
 		[RegularExpression("^(0|[1-9][0-9]*)$")]
 		public string DocNumber { get; set; }
 
