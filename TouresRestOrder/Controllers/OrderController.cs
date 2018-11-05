@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TouresCommon;
 using TouresRestOrder.Model;
@@ -44,6 +45,8 @@ namespace TouresRestOrder.Controllers
 			var result = new ResponseBase<List<OrderModel>>();
 
 			result = await new OrderService(oracleConn).GetOrders(customer);
+            result.Data = (from item in result.Data orderby item.IdEstado descending select item).ToList();
+
 			return this.Result(result.Code, result);
 		}
 

@@ -23,8 +23,8 @@ namespace TouresRestOrder.Model
 		[StringLength(10)]
 		public string Status { get; set; }
 
-		[Required(AllowEmptyStrings = false)]
-		[StringLength(4000)]
+		//[Required(AllowEmptyStrings = true)]
+		//[StringLength(4000)]
 		public string Comments { get; set; }
 
 		[Required(AllowEmptyStrings = false)]

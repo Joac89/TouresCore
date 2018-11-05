@@ -134,10 +134,11 @@ namespace TouresRestCustomer.Service
 				repository.Parameters.Add("P_CREDITCARDTYPE", OracleDbType.Varchar2, 200).Value = data.CreditCardType;
 				repository.Parameters.Add("P_CREDITCARDNUMBER", OracleDbType.Varchar2, 200).Value = data.CreditCardNumber;
 				repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2, 200).Value = data.Status;
-				repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2).Value = data.DocNumber;
+				repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2, 200).Value = data.DocNumber;
 				repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.UserName;
+                repository.Parameters.Add("P_TIPOCLIENTE", OracleDbType.Varchar2, 200).Value = "BRONCE";
 
-				repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_INSERT");
+                repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_INSERT");
 				if (repository.Status.Code == Status.Ok)
 				{
 					response.Data = true;
@@ -161,11 +162,14 @@ namespace TouresRestCustomer.Service
 
 		public async Task<ResponseBase<Boolean>> UpdateCustomer(CustomerModel data)
 		{
-			var response = new ResponseBase<Boolean>();
+            data.Password = !string.IsNullOrWhiteSpace(data.Password) ? data.Password : "=====";
+
+            var response = new ResponseBase<Boolean>();
 			var validate = ValidateMiddle.Result(data);
 
-			if (validate.Status)
+           	if (validate.Status)
 			{
+                if (data.Password == "=====") data.Password = "";
 				IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_CUSTID");
 
 				repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Value = data.CustId;
@@ -179,7 +183,8 @@ namespace TouresRestCustomer.Service
 				repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2, 200).Value = data.Status;
 				repository.Parameters.Add("P_DOCNUMBER", OracleDbType.Varchar2).Value = data.DocNumber;
 				repository.Parameters.Add("P_USERNAME", OracleDbType.Varchar2, 200).Value = data.UserName;
-				repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
+                repository.Parameters.Add("P_TIPOCLIENTE", OracleDbType.Varchar2, 200).Value = data.ClientType;
+                repository.Parameters.Add("P_ROWCOUNT", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
 				repository.SaveChanges("PKG_B2C_CUSTOMER.B2C_CUSTOMER_ACTUALIZAR");
 				if (repository.Status.Code == Status.Ok)
