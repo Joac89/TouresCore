@@ -23,9 +23,17 @@ namespace TouresRestCustomer.Controllers
 			oracleConn = config["oracleConnection"];
 		}
 
-		[Authorize]
+        /// <summary>
+        /// Busca un cliente por documento de identidad
+        /// </summary>
+        /// <param name="document">Tipo de documento del cliente a buscar</param>
+        /// <returns>Devuelve un objeto con la información del cliente consultado</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
 		[HttpGet("{document}")]
-		public async Task<IActionResult> GetCustomer(string document)
+        public async Task<IActionResult> GetCustomer(string document)
 		{
 			var result = new ResponseBase<CustomerModel>();
 			result = await new CustomerService(oracleConn).GetCustomer(document);
@@ -35,7 +43,15 @@ namespace TouresRestCustomer.Controllers
 			return this.Result(result.Code, result);
 		}
 
-		[Authorize]
+        /// <summary>
+        /// Crea un cliente
+        /// </summary>
+        /// <param name="data">Datos del cliente a crear</param>
+        /// <returns>Devuelve un objeto que indica si el cliente fue creado</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
 		[HttpPost]
 		public async Task<IActionResult> InsertCustomer([FromBody] CustomerModel data)
 		{
@@ -45,7 +61,15 @@ namespace TouresRestCustomer.Controllers
 			return this.Result(result.Code, result);
 		}
 
-		[Authorize]
+        /// <summary>
+        /// Autentica un cliente
+        /// </summary>
+        /// <param name="data">Datos del cliente que se necesitan para autenticar</param>
+        /// <returns>Devuelve un objeto que indica si el cliente tiene o no acceso</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
 		[HttpPost("login")]
 		public async Task<IActionResult> LoginCustomer([FromBody] CustomerAuthModel data)
 		{
@@ -57,7 +81,15 @@ namespace TouresRestCustomer.Controllers
 			return this.Result(result.Code, result);
 		}
 
-		[Authorize]
+        /// <summary>
+        /// Actualiza un cliente
+        /// </summary>
+        /// <param name="data">Datos del cliente que se va a actualizar</param>
+        /// <returns>Devuelve un objeto con la información del cliente actualizado</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
 		[HttpPut]
 		public async Task<IActionResult> UpdateCustomer([FromBody] CustomerModel data)
 		{
@@ -67,7 +99,15 @@ namespace TouresRestCustomer.Controllers
 			return this.Result(result.Code, result);
 		}
 
-		[Authorize]
+        /// <summary>
+        /// Elimina un cliente por Id
+        /// </summary>
+        /// <param name="id">Id del cliente a eliminar</param>
+        /// <returns>Devuelve el resultado de la eliminación del cliente</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
 		[HttpDelete]
 		public async Task<IActionResult> DeleteCustomer(long id)
 		{

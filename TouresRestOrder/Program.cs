@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace TouresRestOrder
 {
+#pragma warning disable CS1591
     public class Program
     {
         public static void Main(string[] args)
@@ -22,4 +23,5 @@ namespace TouresRestOrder
                 .UseStartup<Startup>()
                 .Build();
     }
+#pragma warning restore CS1591
 }

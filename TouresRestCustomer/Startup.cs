@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace TouresRestCustomer
@@ -44,7 +48,29 @@ namespace TouresRestCustomer
 				 });
 
 			services.AddMvc();
-		}
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Customer Service",
+                    Version = "v1.0",
+                    Description = "",
+                    Contact = new Contact()
+                    {
+                        Name = ": ITBusiness - itbusiness@aes.com",
+                        Email = "itbusiness@aes.com"
+                    },
+                    License = new License()
+                    {
+                        Name = "MIT",
+                        Url = "http://opensource.org/licenses/MIT"
+                    },
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -57,6 +83,16 @@ namespace TouresRestCustomer
 			app.UseResponseCompression();
 			app.UseAuthentication();
 			app.UseMvc();
-		}
+            app.UseSwagger();
+
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
+            }).UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer Service");
+                c.RoutePrefix = string.Empty;
+            });
+        }
 	}
 }
