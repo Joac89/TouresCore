@@ -38,17 +38,18 @@ namespace TouresAuthenticate.Service
 						user.Names = item["FNAME"].ToString();
 						user.Surnames = item["LNAME"].ToString();
 						user.Status = item["STATUS"].ToString();
+                        user.TipoCliente = item["TIPOCLIENTE"].ToString();
 
-						//user.CUSTID = long.Parse(item["CUSTID"].ToString());
-						//user.FNAME = item["FNAME"].ToString();
-						//user.LNAME = item["LNAME"].ToString();
-						//user.PHONENUMBER = item["PHONENUMBER"].ToString();
-						//user.EMAIL = item["EMAIL"].ToString();
-						//user.PASSWORD = item["PASSWORD"].ToString();
-						//user.CREDITCARDTYPE = item["CREDITCARDTYPE"].ToString();
-						//user.CREDITCARDNUMBER = item["CREDITCARDNUMBER"].ToString();
-						//user.STATUS = item["STATUS"].ToString();
-					}
+                        //user.CUSTID = long.Parse(item["CUSTID"].ToString());
+                        //user.FNAME = item["FNAME"].ToString();
+                        //user.LNAME = item["LNAME"].ToString();
+                        //user.PHONENUMBER = item["PHONENUMBER"].ToString();
+                        //user.EMAIL = item["EMAIL"].ToString();
+                        //user.PASSWORD = item["PASSWORD"].ToString();
+                        //user.CREDITCARDTYPE = item["CREDITCARDTYPE"].ToString();
+                        //user.CREDITCARDNUMBER = item["CREDITCARDNUMBER"].ToString();
+                        //user.STATUS = item["STATUS"].ToString();
+                    }
 				}
 				else
 				{

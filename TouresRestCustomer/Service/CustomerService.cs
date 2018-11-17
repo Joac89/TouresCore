@@ -49,7 +49,7 @@ namespace TouresRestCustomer.Service
 						user.Status = item["STATUS"].ToString();
 						user.DocNumber = item["DOCNUMBER"].ToString();
 						user.UserName = item["USERNAME"].ToString();
-						//user.Address = item["ADDRESSID"].ToString();
+					    user.TipoCliente = item["TIPOCLIENTE"].ToString();
 					}
 
 					response.Data = user;
