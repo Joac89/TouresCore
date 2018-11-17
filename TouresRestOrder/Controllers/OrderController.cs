@@ -71,8 +71,7 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [Authorize]
-        //[HttpGet("{customer}")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllOrders()
         {
             var result = new ResponseBase<List<OrderModel>>();

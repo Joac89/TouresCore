@@ -37,8 +37,17 @@ namespace TouresRestOrder.Controllers
         public async Task<IActionResult> GetOrders(int tipo)
         {
             var result = new ResponseBase<List<ReportOrdenModel>>();
-
-            result = await new ReportService(oracleConn).GetReportOrders(tipo);
+            switch (tipo)
+            {
+                case 1:
+                case 2:
+                    result = await new ReportService(oracleConn).GetReportOrders(tipo);
+                    break;
+                default:
+                    Console.WriteLine("Default case");
+                    break;
+            }
+            
 
             return this.Result(result.Code, result);
         }
