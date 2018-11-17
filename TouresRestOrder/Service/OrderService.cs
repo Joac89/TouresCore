@@ -112,6 +112,99 @@ namespace TouresRestOrder.Service
 
 			return await Task.Run(() => response);
 		}
+        public async Task<ResponseBase<List<OrderModel>>> GetOrdersById(long OrderId)
+        {
+            var response = new ResponseBase<List<OrderModel>>();
+
+            if (OrderId > 0)
+            {
+                IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+                var order = new OrderModel();
+                var lOrder = new List<OrderModel>();
+
+                repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Value = OrderId;
+                repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT_ID");
+                if (repository.Status.Code == Status.Ok)
+                {
+                    foreach (var item in result)
+                    {
+                        order = new OrderModel();
+                        order.Comments = item["COMMENTS"].ToString();
+                        order.CustId = long.Parse(item["CUSTID"].ToString());
+                        order.OrdenDate = DateTime.Parse(item["ORDENDATE"].ToString());
+                        order.OrdId = long.Parse(item["ORDID"].ToString());
+                        order.Price = decimal.Parse(item["PRICE"].ToString());
+                        order.Status = item["IDESTADO"].ToString();
+                        order.LItems = GetItemFromOrder(order.OrdId).Result.Data;
+
+                        lOrder.Add(order);
+                    }
+
+                    response.Data = lOrder;
+                }
+                else
+                {
+                    response.Message = repository.Status.Message;
+                }
+                response.Code = repository.Status.Code;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field CustId is zero(0)";
+            }
+
+            return await Task.Run(() => response);
+        }
+        public async Task<ResponseBase<List<OrderModel>>> GetOrdersByProduct(long ProductId)
+        {
+            var response = new ResponseBase<List<OrderModel>>();
+
+            if (ProductId > 0)
+            {
+                IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+                var order = new OrderModel();
+                var lOrder = new List<OrderModel>();
+
+                repository.Parameters.Add("P_PRODID", OracleDbType.Int64).Value = ProductId;
+                repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT_ID");
+                if (repository.Status.Code == Status.Ok)
+                {
+                    foreach (var item in result)
+                    {
+                        order = new OrderModel();
+                        order.Comments = item["COMMENTS"].ToString();
+                        order.CustId = long.Parse(item["CUSTID"].ToString());
+                        order.OrdenDate = DateTime.Parse(item["ORDENDATE"].ToString());
+                        order.OrdId = long.Parse(item["ORDID"].ToString());
+                        order.Price = decimal.Parse(item["PRICE"].ToString());
+                        order.Status = item["IDESTADO"].ToString();
+                        order.LItems = GetItemFromOrder(order.OrdId).Result.Data;
+
+                        lOrder.Add(order);
+                    }
+
+                    response.Data = lOrder;
+                }
+                else
+                {
+                    response.Message = repository.Status.Message;
+                }
+                response.Code = repository.Status.Code;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field CustId is zero(0)";
+            }
+
+            return await Task.Run(() => response);
+        }
+        //B2C_ORDERS_SELECT_PRODUCT
         public async Task<ResponseBase<List<OrderModel>>> GetAllOrders()
         {
             var response = new ResponseBase<List<OrderModel>>();

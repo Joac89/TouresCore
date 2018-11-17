@@ -81,6 +81,40 @@ namespace TouresRestOrder.Controllers
 
             return this.Result(result.Code, result);
         }
+        /// <summary>
+        /// Obtiene las ordenes
+        /// </summary>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpGet("all/{Id}")]
+        public async Task<IActionResult> GetOrdersById(long Id)
+        {
+            var result = new ResponseBase<List<OrderModel>>();
+
+            result = await new OrderService(oracleConn).GetOrdersById(Id);
+            result.Data = (from item in result.Data orderby item.IdEstado descending select item).ToList();
+
+            return this.Result(result.Code, result);
+        }
+        /// <summary>
+        /// Obtiene las ordenes
+        /// </summary>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpGet("all/Product/{Id}")]
+        public async Task<IActionResult> GetOrdersByProduct(long Id)
+        {
+            var result = new ResponseBase<List<OrderModel>>();
+
+            result = await new OrderService(oracleConn).GetOrdersByProduct(Id);
+            result.Data = (from item in result.Data orderby item.IdEstado descending select item).ToList();
+
+            return this.Result(result.Code, result);
+        }
 
         /// <summary>
         /// Obtiene los items de una orden
