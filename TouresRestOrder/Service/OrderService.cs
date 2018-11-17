@@ -171,7 +171,7 @@ namespace TouresRestOrder.Service
                 repository.Parameters.Add("P_PRODID", OracleDbType.Int64).Value = ProductId;
                 repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-                var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT_ID");
+                var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT_PRODUCT");
                 if (repository.Status.Code == Status.Ok)
                 {
                     foreach (var item in result)
