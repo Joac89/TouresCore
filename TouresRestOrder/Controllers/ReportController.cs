@@ -36,20 +36,26 @@ namespace TouresRestOrder.Controllers
         [HttpGet("{tipo}")]
         public async Task<IActionResult> GetOrders(int tipo)
         {
-            var result = new ResponseBase<List<ReportOrdenModel>>();
+            
             switch (tipo)
             {
                 case 1:
                 case 2:
+                    var result = new ResponseBase<List<ReportOrdenModel>>();
                     result = await new ReportService(oracleConn).GetReportOrders(tipo);
-                    break;
+                    return this.Result(result.Code, result);
+                case 3:
+                    var resultCli = new ResponseBase<List<ReportClienteModel>>();
+                    resultCli = await new ReportService(oracleConn).GetReportClientes(tipo);
+                    return this.Result(resultCli.Code, resultCli);
                 default:
-                    Console.WriteLine("Default case");
-                    break;
+                    var resultdef = new ResponseBase<List<ReportOrdenModel>>();
+                    resultdef = await new ReportService(oracleConn).GetReportOrders(tipo);
+                    return this.Result(resultdef.Code, resultdef);
             }
             
 
-            return this.Result(result.Code, result);
+            
         }
 
     }
