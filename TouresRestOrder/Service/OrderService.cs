@@ -32,7 +32,7 @@ namespace TouresRestOrder.Service
 				repository.Parameters.Add("P_ORDENDATE", OracleDbType.Date, 200).Value = DateTime.Now;
 				repository.Parameters.Add("P_PRICE", OracleDbType.Long, 200).Value = data.Price;
 				repository.Parameters.Add("P_IDESTADO", OracleDbType.Int16).Value = 1;
-				repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2).Value = data.Status;
+				//repository.Parameters.Add("P_STATUS", OracleDbType.Varchar2).Value = data.Status;
 				repository.Parameters.Add("P_COMMENTS", OracleDbType.Varchar2).Value = data.Comments;
 				repository.Parameters.Add("P_ORDID", OracleDbType.Int64).Direction = ParameterDirection.Output;
 
@@ -79,7 +79,7 @@ namespace TouresRestOrder.Service
 				repository.Parameters.Add("P_CUSTID", OracleDbType.Int64).Value = custId;
 				repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
-				var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT");
+				var result = repository.Get("PKG_B2C_ORDERS.B2C_ORDERS_SELECT_CLIENTE");
 				if (repository.Status.Code == Status.Ok)
 				{
 					foreach (var item in result)
@@ -90,7 +90,7 @@ namespace TouresRestOrder.Service
 						order.OrdenDate = DateTime.Parse(item["ORDENDATE"].ToString());
 						order.OrdId = long.Parse(item["ORDID"].ToString());
 						order.Price = decimal.Parse(item["PRICE"].ToString());
-						order.Status = item["STATUS"].ToString();
+						order.Status = item["IDESTADO"].ToString();
 						order.LItems = GetItemFromOrder(order.OrdId).Result.Data;
 
 						lOrder.Add(order);
@@ -163,7 +163,7 @@ namespace TouresRestOrder.Service
 		{
 			var response = new ResponseBase<bool>();
 
-			if (IdOrden > 0 && IdEstado > 0)
+			if (IdOrden > 0)
 			{
 				IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ROWCOUNT");
 

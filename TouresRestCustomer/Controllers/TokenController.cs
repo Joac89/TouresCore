@@ -21,7 +21,15 @@ namespace TouresRestCustomer.Controllers
 			config = configuration;
 		}
 
-		[AllowAnonymous]
+        /// <summary>
+        /// Devuelve un token JWT para un cliente autenticado
+        /// </summary>
+        /// <param name="data">Datos del cliente autenticado</param>
+        /// <returns>Devuelve el token de autenticación que permite al usuario ingresar a los métodos del API</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [AllowAnonymous]
 		[HttpPost]
 		public async Task<IActionResult> GetToken([FromBody] AuthenticateModel data)
 		{

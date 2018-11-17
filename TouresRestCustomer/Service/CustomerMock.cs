@@ -44,37 +44,41 @@ namespace TouresRestCustomer.Service
 			return await Task.Run(() => response);
 		}
 
-		public async Task<ResponseBase<CustomerModel>> GetCustomer(string document)
-		{
-			var response = new ResponseBase<CustomerModel>();
+        public async Task<ResponseBase<CustomerModel>> GetCustomer(string document)
+        {
+            var response = new ResponseBase<CustomerModel>();
 
-			if (!string.IsNullOrWhiteSpace(document))
-			{
-				IRepository<OracleParameterCollection> repository = new OracleRepository();
-				repository.Status.Code = Status.Ok;
+            if (!string.IsNullOrWhiteSpace(document))
+            {
+                IRepository<OracleParameterCollection> repository = new OracleRepository();
+                var user = new CustomerModel();
 
-				var user = new CustomerModel();
-				if (repository.Status.Code == Status.Ok)
-				{
-					user.CustId = 1;
-					response.Data = user;
-				}
-				else
-				{
-					response.Message = repository.Status.Message;
-				}
-				response.Code = repository.Status.Code;
-			}
-			else
-			{
-				response.Code = Status.InvalidData;
-				response.Message = "The field Document is empty";
-			}
+                repository.Status.Code = Status.Ok;
+                if (repository.Status.Code == Status.Ok)
+                {
+                    for (var item = 0; item > 100; ++item)
+                    {
+                        user.CustId = item;
+                    }
 
-			return await Task.Run(() => response);
-		}
+                    response.Data = user;
+                }
+                else
+                {
+                    response.Message = repository.Status.Message;
+                }
+                response.Code = repository.Status.Code;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field Document is empty";
+            }
 
-		public async Task<ResponseBase<Boolean>> InsertCustomer(CustomerModel data)
+            return await Task.Run(() => response);
+        }
+
+        public async Task<ResponseBase<Boolean>> InsertCustomer(CustomerModel data)
 		{
 			var response = new ResponseBase<Boolean>();
 			var validate = ValidateMiddle.Result(data);

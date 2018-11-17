@@ -27,7 +27,7 @@ namespace TouresRestCustomer.Model
 		public string Password { get; set; }
 
 		[Required(AllowEmptyStrings = false)]
-		[StringLength(40, MinimumLength = 5)]
+		[StringLength(40, MinimumLength = 1)]
 		public string CreditCardType { get; set; }
 
 		[Required(AllowEmptyStrings = false)]
@@ -35,9 +35,11 @@ namespace TouresRestCustomer.Model
 		public string CreditCardNumber { get; set; }
 		
 		[Required(AllowEmptyStrings = false)]
-		[StringLength(20, MinimumLength = 10)]
+		[StringLength(20, MinimumLength = 5)]
 		[RegularExpression("^(0|[1-9][0-9]*)$")]
 		public string DocNumber { get; set; }
+
+        public string ClientType { get; set; }
 
 		public long CustId { get; set; }
 		public string UserName { get; set; }

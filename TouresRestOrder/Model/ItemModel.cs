@@ -19,8 +19,8 @@ namespace TouresRestOrder.Model
 		[StringLength(50, MinimumLength = 5)]
 		public string ProductName { get; set; }
 
-		[Required(AllowEmptyStrings = false)]
-		[StringLength(20, MinimumLength = 5)]
+		//[Required(AllowEmptyStrings = false)]
+		//[StringLength(20, MinimumLength = 5)]
 		public string PartNum { get; set; }
 
 		[Required(AllowEmptyStrings = false)]
