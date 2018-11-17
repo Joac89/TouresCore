@@ -87,7 +87,7 @@ namespace TouresRestOrder.Service
                     {
                         order = new ReportClienteModel();
                         order.fname = item["FNAME"].ToString();
-                        order.Total = double.Parse(item["PRICE"].ToString());
+                        order.Total = double.Parse(item["TOTAL"].ToString());
                         lOrder.Add(order);
                     }
 
