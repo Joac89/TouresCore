@@ -33,8 +33,8 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpGet("{tipo}")]
-        public async Task<IActionResult> GetOrders(int tipo)
+        [HttpGet("{tipo}/{fecha1}/{fecha2}")]
+        public async Task<IActionResult> GetOrders(int tipo, string fecha1, string fecha2)
         {
             
             switch (tipo)
@@ -46,7 +46,7 @@ namespace TouresRestOrder.Controllers
                     return this.Result(result.Code, result);
                 case 3:
                     var resultCli = new ResponseBase<List<ReportClienteModel>>();
-                    resultCli = await new ReportService(oracleConn).GetReportClientes(tipo);
+                    resultCli = await new ReportService(oracleConn).GetReportClientes(tipo, fecha1, fecha2);
                     return this.Result(resultCli.Code, resultCli);
                 default:
                     var resultdef = new ResponseBase<List<ReportOrdenModel>>();
@@ -58,5 +58,37 @@ namespace TouresRestOrder.Controllers
             
         }
 
+
+        /// <summary>
+        /// Obtiene las ordenes de un usuario por id
+        /// </summary>
+        /// <param name="customer">Id de usuario</param>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpGet("cliente/{cusid}")]
+        public async Task<IActionResult> GetRankingClientes(int cusid)
+        {
+                    var result = new ResponseBase<List<ReportOrdenModel>>();
+                    result = await new ReportService(oracleConn).GetReportRankingClientes(cusid);
+                    return this.Result(result.Code, result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customer">Id de usuario</param>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpGet("product/{tipo}")]
+        public async Task<IActionResult> GetRankingProduct(int tipo)
+        {
+            var result = new ResponseBase<List<ReportProductModel>>();
+            result = await new ReportService(oracleConn).GetReportProducto(tipo);
+            return this.Result(result.Code, result);
+        }
     }
 }
