@@ -25,5 +25,8 @@ namespace TouresRestOrder.Model
     {
         public string productname { get; set; }
         public int Cantidad { get; set; }
+        public int proid { get; set; }
+        public double valor { get; set; }
     }
+
 }
