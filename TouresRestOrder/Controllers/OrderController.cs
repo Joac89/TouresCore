@@ -205,7 +205,7 @@ namespace TouresRestOrder.Controllers
         {
             var result = new ResponseBase<bool>();
             var mensaje = string.Empty;
-            result = await new OrderService(oracleConn).ActualizaEstadoOrder(idOrder, 4);
+            result = await new OrderService(oracleConn).ActualizaEstadoOrder(idOrder, 0);
             return this.Result(result.Code, result);
         }
     }
