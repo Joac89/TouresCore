@@ -83,11 +83,11 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpGet("product/{tipo}")]
-        public async Task<IActionResult> GetRankingProduct(int tipo)
+        [HttpGet("product/{tipo}/{fecha1}/{fecha2}")]
+        public async Task<IActionResult> GetRankingProduct(int tipo, string fecha1, string fecha2)
         {
             var result = new ResponseBase<List<ReportProductModel>>();
-            result = await new ReportService(oracleConn).GetReportProducto(tipo);
+            result = await new ReportService(oracleConn).GetReportProducto(tipo, fecha1, fecha2);
             return this.Result(result.Code, result);
         }
     }

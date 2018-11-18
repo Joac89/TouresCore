@@ -156,7 +156,7 @@ namespace TouresRestOrder.Service
             return await Task.Run(() => response);
         }
 
-        public async Task<ResponseBase<List<ReportProductModel>>> GetReportProducto(int tipobusqueda)
+        public async Task<ResponseBase<List<ReportProductModel>>> GetReportProducto(int tipobusqueda, string fecha1, string fecha2)
         {
             var response = new ResponseBase<List<ReportProductModel>>();
 
@@ -167,8 +167,8 @@ namespace TouresRestOrder.Service
                 var lOrder = new List<ReportProductModel>();
 
                 repository.Parameters.Add("P_TIPO_INFORME", OracleDbType.Int32).Value = tipobusqueda;
-                repository.Parameters.Add("P_FECHA1", OracleDbType.Date).Value = DateTime.Now;
-                repository.Parameters.Add("P_FECHA2", OracleDbType.Date).Value = DateTime.Now;
+                repository.Parameters.Add("P_FECHA1", OracleDbType.Date).Value = DateTime.Parse(fecha1);
+                repository.Parameters.Add("P_FECHA2", OracleDbType.Date).Value = DateTime.Parse(fecha2);
                 repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
                 var result = repository.Get("PKG_B2C_REPORT.B2C_ORDERS_SELECT");
