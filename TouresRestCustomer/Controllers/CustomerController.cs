@@ -49,9 +49,8 @@ namespace TouresRestCustomer.Controllers
         /// <returns>Devuelve un objeto con la información del cliente consultado</returns>
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
-        [ProducesResponseType(422)]
-        [Authorize]
-        [HttpGet("{document}")]
+        [ProducesResponseType(422)]       
+        [HttpGet("Product/{product}")]
         public async Task<IActionResult> GetCustomerbyProduct(string product)
         {
             var result = new ResponseBase<CustomerModel>();
