@@ -116,8 +116,55 @@ namespace TouresRestCustomer.Service
 
 			return await Task.Run(() => response);
 		}
+        public async Task<ResponseBase<CustomerModel>> GetCustomerbyProduct(string product)
+        {
+            var response = new ResponseBase<CustomerModel>();
 
-		public async Task<ResponseBase<Boolean>> InsertCustomer(CustomerModel data)
+            if (!string.IsNullOrWhiteSpace(product))
+            {
+                IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+                var user = new CustomerModel();
+
+                repository.Parameters.Add("P_PRODUCT", OracleDbType.Varchar2, 200).Value = product;
+                repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                var result = repository.Get("PKG_B2C_CUSTOMER.B2C_CUSTOMER_SELECT_PRODUCT");
+                if (repository.Status.Code == Status.Ok)
+                {
+                    foreach (var item in result)
+                    {
+                        user.CustId = long.Parse(item["CUSTID"].ToString());
+                        user.FName = item["FNAME"].ToString();
+                        user.LName = item["LNAME"].ToString();
+                        user.PhoneNumber = item["PHONENUMBER"].ToString();
+                        user.Email = item["EMAIL"].ToString();
+                        user.Password = item["PASSWORD"].ToString();
+                        user.CreditCardType = item["CREDITCARDTYPE"].ToString();
+                        user.CreditCardNumber = item["CREDITCARDNUMBER"].ToString();
+                        user.Status = item["STATUS"].ToString();
+                        user.DocNumber = item["DOCNUMBER"].ToString();
+                        user.UserName = item["USERNAME"].ToString();
+                        user.TipoCliente = item["TIPOCLIENTE"].ToString();
+                    }
+
+                    response.Data = user;
+                }
+                else
+                {
+                    response.Message = repository.Status.Message;
+                }
+                response.Code = repository.Status.Code;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field Document is empty";
+            }
+
+            return await Task.Run(() => response);
+        }
+
+        public async Task<ResponseBase<Boolean>> InsertCustomer(CustomerModel data)
 		{
 			var response = new ResponseBase<Boolean>();
 			var validate = ValidateMiddle.Result(data);

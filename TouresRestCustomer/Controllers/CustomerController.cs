@@ -42,7 +42,26 @@ namespace TouresRestCustomer.Controllers
 
 			return this.Result(result.Code, result);
 		}
+        /// <summary>
+        /// Busca un cliente por documento de identidad
+        /// </summary>
+        /// <param name="product">Producto del cliente a buscar</param>
+        /// <returns>Devuelve un objeto con la información del cliente consultado</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [Authorize]
+        [HttpGet("{document}")]
+        public async Task<IActionResult> GetCustomerbyProduct(string product)
+        {
+            var result = new ResponseBase<CustomerModel>();
+            result = await new CustomerService(oracleConn).GetCustomerbyProduct(product);
 
+            if (result.Data.CustId == 0) result.Code = Status.NotFound;
+
+            return this.Result(result.Code, result);
+        }
+        
         /// <summary>
         /// Crea un cliente
         /// </summary>
