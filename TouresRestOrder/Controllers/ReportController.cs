@@ -42,7 +42,7 @@ namespace TouresRestOrder.Controllers
                 case 1:
                 case 2:
                     var result = new ResponseBase<List<ReportOrdenModel>>();
-                    result = await new ReportService(oracleConn).GetReportOrders(tipo);
+                    result = await new ReportService(oracleConn).GetReportOrders(tipo, fecha1, fecha2);
                     return this.Result(result.Code, result);
                 case 3:
                     var resultCli = new ResponseBase<List<ReportClienteModel>>();
@@ -50,7 +50,7 @@ namespace TouresRestOrder.Controllers
                     return this.Result(resultCli.Code, resultCli);
                 default:
                     var resultdef = new ResponseBase<List<ReportOrdenModel>>();
-                    resultdef = await new ReportService(oracleConn).GetReportOrders(tipo);
+                    resultdef = await new ReportService(oracleConn).GetReportOrders(tipo, fecha1, fecha2);
                     return this.Result(resultdef.Code, resultdef);
             }
             
@@ -67,11 +67,11 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpGet("cliente/{cusid}")]
-        public async Task<IActionResult> GetRankingClientes(int cusid)
+        [HttpGet("cliente/{cusid}/{fecha1}/{fecha2}")]
+        public async Task<IActionResult> GetRankingClientes(int cusid, string fecha1, string fecha2)
         {
                     var result = new ResponseBase<List<ReportOrdenModel>>();
-                    result = await new ReportService(oracleConn).GetReportRankingClientes(cusid);
+                    result = await new ReportService(oracleConn).GetReportRankingClientes(cusid, fecha1, fecha2);
                     return this.Result(result.Code, result);
         }
 
