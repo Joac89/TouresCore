@@ -181,7 +181,6 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [Authorize]
         [HttpPost("update/{idOrder}/{idEstado}")]
         public async Task<IActionResult> UpdateEstadoOrder(int idOrder, int idEstado)
         {
