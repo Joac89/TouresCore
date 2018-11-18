@@ -18,6 +18,7 @@ namespace TouresRestOrder.Model
     {
         public string fname { get; set; }
         public double Total { get; set; }
+        public int custid { get; set; }
     }
 
     public class ReportProductModel
