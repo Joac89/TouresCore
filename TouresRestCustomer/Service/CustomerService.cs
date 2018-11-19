@@ -138,7 +138,7 @@ namespace TouresRestCustomer.Service
                     {
                         user = new CustomerModel();
 
-                        user. CustId = long.Parse(item["CUSTID"].ToString());
+                        user.CustId = long.Parse(item["CUSTID"].ToString());
                         user.FName = item["FNAME"].ToString();
                         user.LName = item["LNAME"].ToString();
                         user.PhoneNumber = item["PHONENUMBER"].ToString();
@@ -149,6 +149,8 @@ namespace TouresRestCustomer.Service
                         user.DocNumber = item["DOCNUMBER"].ToString();
                         user.UserName = item["USERNAME"].ToString();
                         user.TipoCliente = item["TIPOCLIENTE"].ToString();
+                        user.ordid = item["ordid"].ToString();
+                        user.itemid = item["itemid"].ToString();
 
                         luser.Add(user);
                     }
