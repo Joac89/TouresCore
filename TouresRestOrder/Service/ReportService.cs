@@ -244,5 +244,50 @@ namespace TouresRestOrder.Service
 
             return await Task.Run(() => response);
         }
+
+        public async Task<ResponseBase<List<ReportOrdenModel>>> GetReportOrderMonthDetail(string month)
+        {
+            var response = new ResponseBase<List<ReportOrdenModel>>();
+
+            if (month.Length > 0)
+            {
+                IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
+                var order = new ReportOrdenModel();
+                var lOrder = new List<ReportOrdenModel>();
+
+                repository.Parameters.Add("P_MONTH", OracleDbType.Int32).Value = month;
+                repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                var result = repository.Get("PKG_B2C_REPORT.B2C_MONTH_RANKING_SELECT");
+                if (repository.Status.Code == Status.Ok)
+                {
+                    foreach (var item in result)
+                    {
+                        order = new ReportOrdenModel();
+                        order.ordid = long.Parse(item["ORDID"].ToString());
+                        order.comments = item["COMMENTS"].ToString();
+                        order.fname = item["FNAME"].ToString();
+                        order.ordendate = DateTime.Parse(item["ORDENDATE"].ToString());
+                        order.nombre_estado = item["NOMBRE_ESTADO"].ToString();
+                        order.price = double.Parse(item["PRICE"].ToString());
+                        lOrder.Add(order);
+                    }
+
+                    response.Data = lOrder;
+                }
+                else
+                {
+                    response.Message = repository.Status.Message;
+                }
+                response.Code = repository.Status.Code;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field CustId is zero(0)";
+            }
+
+            return await Task.Run(() => response);
+        }
     }
 }
