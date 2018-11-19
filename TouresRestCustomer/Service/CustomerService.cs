@@ -120,12 +120,13 @@ namespace TouresRestCustomer.Service
 
         public async Task<ResponseBase<List<CustomerModel>>> GetCustomerbyProduct(string product)
         {
-            var response = new ResponseBase<CustomerModel>();
+            var response = new ResponseBase<List<CustomerModel>>();
 
             if (!string.IsNullOrWhiteSpace(product))
             {
                 IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "C_DATASET");
-                var user = new CustomerModel();
+                var luser = new List<CustomerModel>();
+                var user = new CustomerModel();                
 
                 repository.Parameters.Add("P_PRODUCT", OracleDbType.Varchar2, 200).Value = product;
                 repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
@@ -135,8 +136,9 @@ namespace TouresRestCustomer.Service
                 {
                     foreach (var item in result)
                     {
-                                                
-                        user.CustId = long.Parse(item["CUSTID"].ToString());
+                        user = new CustomerModel();
+
+                        user. CustId = long.Parse(item["CUSTID"].ToString());
                         user.FName = item["FNAME"].ToString();
                         user.LName = item["LNAME"].ToString();
                         user.PhoneNumber = item["PHONENUMBER"].ToString();
@@ -147,9 +149,11 @@ namespace TouresRestCustomer.Service
                         user.DocNumber = item["DOCNUMBER"].ToString();
                         user.UserName = item["USERNAME"].ToString();
                         user.TipoCliente = item["TIPOCLIENTE"].ToString();
+
+                        luser.Add(user);
                     }
 
-                    response.Data = user;
+                    response.Data = luser;
                 }
                 else
                 {
