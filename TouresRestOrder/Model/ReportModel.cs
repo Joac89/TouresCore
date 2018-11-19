@@ -29,4 +29,11 @@ namespace TouresRestOrder.Model
         public double valor { get; set; }
     }
 
+    public class ReportOrderMonth
+    {
+        public string month { get; set;}
+        public int cantidad { get; set; }
+        public double valor { get; set; }
+    }
+
 }

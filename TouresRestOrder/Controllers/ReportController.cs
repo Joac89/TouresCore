@@ -90,5 +90,21 @@ namespace TouresRestOrder.Controllers
             result = await new ReportService(oracleConn).GetReportProducto(tipo, fecha1, fecha2);
             return this.Result(result.Code, result);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customer">Id de usuario</param>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpGet("month/{tipo}/{fecha1}/{fecha2}")]
+        public async Task<IActionResult> GetReportOrderMonth(int tipo, string fecha1, string fecha2)
+        {
+            var result = new ResponseBase<List<ReportOrderMonth>>();
+            result = await new ReportService(oracleConn).GetReportOrderMonth(tipo);
+            return this.Result(result.Code, result);
+        }
     }
 }
