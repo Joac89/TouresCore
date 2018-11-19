@@ -179,7 +179,7 @@ namespace TouresRestOrder.Service
                         order = new ReportProductModel();
                         order.productname = item["PRODUCTNAME"].ToString();
                         order.Cantidad = int.Parse(item["CANTIDAD"].ToString());
-                        order.proid = int.Parse(item["PROID"].ToString());
+                        order.proid = int.Parse(item["PRODID"].ToString());
                         order.valor = double.Parse(item["VALOR"].ToString());
                         lOrder.Add(order);
                     }
