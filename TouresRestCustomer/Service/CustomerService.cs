@@ -1,5 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using TouresCommon;
@@ -117,7 +118,7 @@ namespace TouresRestCustomer.Service
 			return await Task.Run(() => response);
 		}
 
-        public async Task<ResponseBase<CustomerModel>> GetCustomerbyProduct(string product)
+        public async Task<ResponseBase<List<CustomerModel>>> GetCustomerbyProduct(string product)
         {
             var response = new ResponseBase<CustomerModel>();
 

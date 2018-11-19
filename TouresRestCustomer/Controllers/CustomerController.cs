@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TouresCommon;
 using TouresRestCustomer.Model;
@@ -53,10 +54,10 @@ namespace TouresRestCustomer.Controllers
         [HttpGet("Product/{product}")]
         public async Task<IActionResult> GetCustomerbyProduct(string product)
         {
-            var result = new ResponseBase<CustomerModel>();
+            var result = new ResponseBase<List<CustomerModel>>();
             result = await new CustomerService(oracleConn).GetCustomerbyProduct(product);
 
-            if (result.Data.CustId == 0) result.Code = Status.NotFound;
+            if (result.Data.Count == 0) result.Code = Status.NotFound;
 
             return this.Result(result.Code, result);
         }
