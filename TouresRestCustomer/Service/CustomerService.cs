@@ -134,12 +134,12 @@ namespace TouresRestCustomer.Service
                 {
                     foreach (var item in result)
                     {
+                                                
                         user.CustId = long.Parse(item["CUSTID"].ToString());
                         user.FName = item["FNAME"].ToString();
                         user.LName = item["LNAME"].ToString();
                         user.PhoneNumber = item["PHONENUMBER"].ToString();
                         user.Email = item["EMAIL"].ToString();
-                        user.Password = item["PASSWORD"].ToString();
                         user.CreditCardType = item["CREDITCARDTYPE"].ToString();
                         user.CreditCardNumber = item["CREDITCARDNUMBER"].ToString();
                         user.Status = item["STATUS"].ToString();
