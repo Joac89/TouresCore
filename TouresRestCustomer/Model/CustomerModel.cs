@@ -46,8 +46,9 @@ namespace TouresRestCustomer.Model
 		public string Address { get; set; }
 		public string Status { get; set; }
         public string TipoCliente { get; set; }
-        public string ordid { get; set; }
-        public string itemid { get; set; }
+
+        public string ORDID { get; set; }
+        public string ITEMID { get; set; }
         
     }
 }

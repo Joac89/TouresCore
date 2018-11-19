@@ -149,8 +149,8 @@ namespace TouresRestCustomer.Service
                         user.DocNumber = item["DOCNUMBER"].ToString();
                         user.UserName = item["USERNAME"].ToString();
                         user.TipoCliente = item["TIPOCLIENTE"].ToString();
-                        user.ordid = item["ordid"].ToString();
-                        user.itemid = item["itemid"].ToString();
+                        user.ORDID = item["ORDID"].ToString();
+                        user.ITEMID = item["ITEMID"].ToString();
 
                         luser.Add(user);
                     }
