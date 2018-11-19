@@ -39,7 +39,7 @@ namespace TouresRestOrder.Controllers
         [HttpPost("insert")]
         public async Task<IActionResult> InsertOrder([FromBody] OrderModel data)
         {
-            var result = new ResponseBase<bool>();
+            var result = new ResponseBase<long>();
 
             result = await new OrderService(oracleConn).InsertOrder(data);
             return this.Result(result.Code, result);

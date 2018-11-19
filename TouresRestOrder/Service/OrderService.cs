@@ -17,11 +17,11 @@ namespace TouresRestOrder.Service
 		{
 			connString = ConnectionString;
 		}
-
+               
 		#region Publicas
-		public async Task<ResponseBase<bool>> InsertOrder(OrderModel data)
+		public async Task<ResponseBase<long>> InsertOrder(OrderModel data)
 		{
-			var response = new ResponseBase<bool>();
+			var response = new ResponseBase<long>();
 			var validate = ValidateMiddle.Result(data);
 
 			if (validate.Status)
@@ -47,12 +47,12 @@ namespace TouresRestOrder.Service
 						InsertItem(item);
 					};
 
-					response.Data = true;
+					response.Data = OrdId;
 					response.Message = "Orden insertada correctamente";
 				}
 				else
 				{
-					response.Data = false;
+					response.Data = -1;
 					response.Message = repository.Status.Message;
 				}
 				response.Code = repository.Status.Code;
