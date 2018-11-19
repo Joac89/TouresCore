@@ -99,8 +99,8 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpGet("month/{tipo}/{fecha1}/{fecha2}")]
-        public async Task<IActionResult> GetReportOrderMonth(int tipo, string fecha1, string fecha2)
+        [HttpGet("month/{tipo}")]
+        public async Task<IActionResult> GetReportOrderMonth(int tipo)
         {
             var result = new ResponseBase<List<ReportOrderMonth>>();
             result = await new ReportService(oracleConn).GetReportOrderMonth(tipo);

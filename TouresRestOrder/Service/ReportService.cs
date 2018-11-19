@@ -222,7 +222,7 @@ namespace TouresRestOrder.Service
                     foreach (var item in result)
                     {
                         order = new ReportOrderMonth();
-                        order.month = item["PRODUCTNAME"].ToString();
+                        order.month = item["MONTH"].ToString();
                         order.cantidad = int.Parse(item["CANTIDAD"].ToString());
                         order.valor = double.Parse(item["VALOR"].ToString());
                         lOrder.Add(order);
@@ -255,7 +255,7 @@ namespace TouresRestOrder.Service
                 var order = new ReportOrdenModel();
                 var lOrder = new List<ReportOrdenModel>();
 
-                repository.Parameters.Add("P_MONTH", OracleDbType.Int32).Value = month;
+                repository.Parameters.Add("P_MONTH", OracleDbType.Varchar2).Value = month;
                 repository.Parameters.Add("C_DATASET", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
                 var result = repository.Get("PKG_B2C_REPORT.B2C_MONTH_RANKING_SELECT");
