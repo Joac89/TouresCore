@@ -208,19 +208,21 @@ namespace TouresRestOrder.Controllers
             return this.Result(result.Code, result);
         }
         /// <summary>
-        /// Borra una orden
+        /// Borra una orden por proveedor
         /// </summary>
-        /// <param name="id">Id de la orden</param>
+        /// <param name="idOrder">Id de la orden</param>
+        /// <param name="idItem">Item de la orden</param>
+        /// <param name="provider">Proveedor de la orden</param>
         /// <returns>Devuelve un objeto con el resultado de la orden eliminada</returns>
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpPost]
-        public async Task<IActionResult> CancelProviderOrder([FromBody] OrderProviderModel data)
+        [HttpGet("cancelProvider/{idOrder}/{idItem}/{provider}")]
+        public async Task<IActionResult> CancelProviderOrder(int idOrder, int idItem, string provider)
         {
             var result = new ResponseBase<OrderProviderModel> ();
             var mensaje = string.Empty;
-            result = await new OrderService(oracleConn).CancelOrderProvider(data.OrdId, data.ItemId, data.Provider);
+            result = await new OrderService(oracleConn).CancelOrderProvider(idOrder, idItem, provider);
             return this.Result(result.Code, result);
         }
     }
