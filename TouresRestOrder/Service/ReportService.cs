@@ -44,7 +44,7 @@ namespace TouresRestOrder.Service
                         order.fname = item["FNAME"].ToString();
                         order.ordendate = DateTime.Parse(item["ORDENDATE"].ToString());
                         order.nombre_estado = item["NOMBRE_ESTADO"].ToString();
-                        order.price =  double.Parse(item["PRICE"].ToString());
+                        order.price = double.Parse(item["PRICE"].ToString());
                         lOrder.Add(order);
                     }
 
@@ -289,5 +289,29 @@ namespace TouresRestOrder.Service
 
             return await Task.Run(() => response);
         }
+
+        public async Task<ResponseBase<int>> GetCancelaProveedor()
+        {
+            var response = new ResponseBase<int>();
+
+            IRepository<OracleParameterCollection> repository = new OracleRepository(connString, "P_ORDID");
+
+            repository.Parameters.Add("P_ITEMID", OracleDbType.Int32).Value = 1;
+
+            repository.SaveChanges("PKG_B2C_ORDERS.B2C_ORDERS_CANCELA_PROVEEDOR");
+            if (repository.Status.Code == Status.Ok)
+            {
+                response.Data = 1;
+            }
+            else
+            {
+                response.Message = repository.Status.Message;
+            }
+            response.Code = repository.Status.Code;
+
+            return await Task.Run(() => response);
+        }
+
+
     }
 }

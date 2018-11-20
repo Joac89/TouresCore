@@ -122,5 +122,22 @@ namespace TouresRestOrder.Controllers
             result = await new ReportService(oracleConn).GetReportOrderMonthDetail(month);
             return this.Result(result.Code, result);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customer">Id de usuario</param>
+        /// <returns>Devuelve un objeto con la información de las ordenes consultadas</returns>
+        /// <response code="422">Invalid Data</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(422)]
+        [HttpPost("cancelProveedor/")]
+        public async Task<IActionResult> GetCancelaProveedor()
+        {
+            var result = new ResponseBase<int>();
+            result = await new ReportService(oracleConn).GetCancelaProveedor();
+            return this.Result(result.Code, result);
+        }
+
     }
 }
