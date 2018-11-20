@@ -326,10 +326,48 @@ namespace TouresRestOrder.Service
 			return await Task.Run(() => response);
 		}
 
-		#endregion
+        public async Task<ResponseBase<OrderProviderModel>> CancelOrderProvider(int IdOrden, int ItemId, string Provider)
+        {
+            var response = new ResponseBase<OrderProviderModel>();
 
-		#region Privadas
-		private ResponseBase<Boolean> InsertItem(ItemModel ObjItem)
+            if (IdOrden > 0)
+            {
+                var orderProvider = new OrderProviderModel();
+
+                orderProvider.OrdId = IdOrden;
+                orderProvider.ItemId = ItemId;
+                orderProvider.Provider = Provider;
+                orderProvider.Status = "Cancelado";
+                orderProvider.ConfirmationId = GetRandomNumber(1000000, 2000000);
+
+                    response.Data = orderProvider;
+                    response.Message = "Existoso";
+                    response.Code = 200;
+            }
+            else
+            {
+                response.Code = Status.InvalidData;
+                response.Message = "The field IdOrder or IdEstado is zero(0)";
+            }
+
+            return await Task.Run(() => response);
+        }
+
+        //Function to get random number
+        private static readonly Random getrandom = new Random();
+
+        public static int GetRandomNumber(int min, int max)
+        {
+            lock (getrandom) // synchronize
+            {
+                return getrandom.Next(min, max);
+            }
+        }
+
+        #endregion
+
+        #region Privadas
+        private ResponseBase<Boolean> InsertItem(ItemModel ObjItem)
 		{
 			var response = new ResponseBase<bool>();
 			var validate = ValidateMiddle.Result(ObjItem);
