@@ -326,7 +326,7 @@ namespace TouresRestOrder.Service
 			return await Task.Run(() => response);
 		}
 
-        public async Task<ResponseBase<OrderProviderModel>> CancelOrderProvider(int IdOrden, int ItemId, string Provider)
+        public async Task<ResponseBase<OrderProviderModel>> CancelOrderProvider(long IdOrden, long ItemId, string Provider)
         {
             var response = new ResponseBase<OrderProviderModel>();
 

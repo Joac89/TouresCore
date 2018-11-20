@@ -215,12 +215,12 @@ namespace TouresRestOrder.Controllers
         /// <response code="422">Invalid Data</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
-        [HttpPost("cancel/{idOrder}")]
-        public async Task<IActionResult> CancelProviderOrder(int idOrder,int itemId, string provider)
+        [HttpPost]
+        public async Task<IActionResult> CancelProviderOrder([FromBody] OrderProviderModel data)
         {
             var result = new ResponseBase<OrderProviderModel> ();
             var mensaje = string.Empty;
-            result = await new OrderService(oracleConn).CancelOrderProvider(idOrder, itemId, provider);
+            result = await new OrderService(oracleConn).CancelOrderProvider(data.OrdId, data.ItemId, data.Provider);
             return this.Result(result.Code, result);
         }
     }
